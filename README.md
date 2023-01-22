@@ -17,6 +17,6 @@ O projeto é um separador de fontes musicais percussivas, onde recebe misturas s
 
 ## Autores
 
-  - **Tiago Simões** - *Graduando* -
+  - **Tiago Simões** - *Graduando* 
   - **Luiz Wagner** - *Orientador*
   - **Lucas Simões** - *Orientador*
