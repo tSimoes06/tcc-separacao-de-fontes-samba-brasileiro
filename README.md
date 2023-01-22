@@ -1,2 +1,2 @@
-# TCC-DSP
-Método DSP para separação de fontes musicais do samba brasileiro a partir de misturas pré-gravadas
+# SEPARAÇÃO DE FONTES MUSICAIS DO SAMBA BRASILEIRO A PARTIR DE MISTURAS PRÉ-GRAVADAS
+
