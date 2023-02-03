@@ -204,7 +204,12 @@ for samba_type in tracks_by_samba_types.keys():
                         paramNMFD['initH'] = initH
 
                         # NMFD core method
-                        nmfdW, nmfdH, nmfdV, divKL, _ = NMFD(A, paramNMFD)
+                        paramConstr = dict()
+                        paramConstr['funcPointerPostProcess'] = semiFixedComponentConstraintsNMF
+                        paramConstr['adaptDegree'] = 1 #0 = fixed, 1 = semi-fixed, 2 = adaptive
+                        paramConstr['adaptTiming'] = 4 #http://dafx14.fau.de/papers/dafx14_christian_dittmar_real_time_transcription_a.pdf
+
+                        nmfdW, nmfdH, nmfdV, divKL, _ = NMFD(A, paramNMFD, paramConstr)
 
                         # alpha-Wiener filtering
                         nmfdA, _ = alphaWienerFilter(A, nmfdV, 1.0)
@@ -249,17 +254,6 @@ for samba_type in tracks_by_samba_types.keys():
                                 inst_estimates.append(sum_comp)
                                 if (save_mix and inst_count_1 < max_inst and inst_count_2 < max_inst_2):
                                     writeEst(out_path, samba_type, cont, mix_track, sum_comp, ic2)
-                                #wav.write(filename=f"{ic}{mix_track.inst[ic]}estimativa-sem-temp.wav", rate=fs, data=sum_comp)
-                            #wav.write(filename=f"{ic}mix.wav", rate=fs, data=ampMixVector) 
-                        # write mix wav
-                        #mix_sum_wav = 0.0
-                        #for y in inst_estimates : mix_sum_wav += y
-                        #mix_sum_wav = mix_sum_wav.T[0]/(1/((num_mix_type+1)+1)) 
-                        #wav.write(filename=f"mix-{mix_track.name}", rate=fs, data=mix_sum_wav)
-                        ##############################################STATISTICS##############################################
-                        #Computar métricas das fontes usando o sinal inteiro e depois calcular a mediana das fontes de mesmo tipo/instrumento (window=np.inf)  museval.metrics.bss_eval
-                        #wav.write(f"{mix_track.name}",data=mix_track.getAmpVector(), rate=fs)
-                        #i=0
 
                         zipao = zip(inst_estimates,ground_truth_tracks)
                         inst_estimates_eval = []
@@ -275,14 +269,6 @@ for samba_type in tracks_by_samba_types.keys():
                             ground_truth.setAmpVector((wav.read(ground_truth.getPath())[1][int(ground_truth.fs*ground_truth.first_beat):]))
                             ref = make_monaural((ground_truth.getAmpVector()))
                             ref = pcmInt16ToFloat32Numpy(ref)
-
-                            #fig, axs = plt.subplots(2)
-                            #fig.suptitle('Comparando formas de onda apos normalizar')
-                            #axs[0].plot(ref)
-                            #axs[0].set_xlim(0,1000000)
-                            #axs[1].plot(estimate)
-                            #axs[1].set_xlim(0,1000000)
-                            #plt.savefig(f'comp-{ground_truth.name}+{mix_track.name}.png')
 
                             inst_estimates_eval.append(estimate)
                             ground_truth_tracks_eval.append(ref[:estimate.size])
