@@ -26,6 +26,7 @@ from NMFtoolbox.initTemplates import initTemplates
 from NMFtoolbox.inverseSTFT import inverseSTFT
 from NMFtoolbox.NMFD import NMFD
 from NMFtoolbox.utils import make_monaural, pcmInt16ToFloat32Numpy
+from NMFtoolbox.semiFixedComponentConstraintsNMF import semiFixedComponentConstraintsNMF
 
 ################################################################################
 
